@@ -1029,20 +1029,7 @@ h1 {
     background-size: 9% 50%;
 	font-size: 14px;
 }
-.content2 input[type="tel"] {
-	margin-top: 6%;
-	width:65%;
-	background: url(../images/phone.png) no-repeat 191px 10px;
-    background-size: 9% 50%;
-	font-size: 14px;
-}
-.content2 input[type="email"] {
-	margin-top: 6%;
-	width:65%;
-	background: url(../images/mail.png) no-repeat 191px 10px;
-    background-size: 9% 50%;
-	font-size: 14px;
-}
+
 .content2 input[type="password"] {
 	margin-top: 6%;
 	width:65%;
