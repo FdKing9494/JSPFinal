@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-<title>Home</title>
+<title>I Do</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="keywords" content="" />
@@ -19,26 +19,71 @@
 <div style="text-align: center">
 	<div class="log">
 		<div class="content1">
-			<a href="index.html"><img src="../static/images/timg.jpg" height="100%" width="100%" style=" width: 600px;height: 372px;top:0;left:0; right:0"/></a>
-			<p style="font-family:'Microsoft Yahei'" align="center" >还没有注册？点击这里立即<a href="./register.html">REGISTER</a></p>
+			<a href="/">
+    					<img src="../static/images/timg.jpg" height="100%" width="100%" style=" width: 600px;height: 348px;top:0;left:0; right:0"/>
+			</a>
+			<p style="font-family:'Microsoft Yahei'" align="center" >NO PAINS,NO GAINS</p>
 		</div>
 		<div class="content2">
 			<h2>Sign In</h2>
-			<form>
-				<input type="text" name="userid" value="USERNAME" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'USERNAME';}">
-				<input type="password" name="psw" value="PASSWORD" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'PASSWORD';}">
+			<div class="column">
+				<input type="text" id="USERNAME" name="USERNAME" value="USERNAME" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'USERNAME';}">
+			</div>
+			<div class="column">
+				<input type="password" id="PASSWORD" name="PASSWORD" value="PASSWORD" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'PASSWORD';}">
+			</div>
 				<div class="button-row">
-				<input type="submit" class="sign-in" value="Sign In">
-				<input type="reset" class="reset" value="Reset">
-				<div class="clear"></div>
+				<input type="submit" class="sign-in" value="Sign In" id=submit onclick="send();">
+					<a href="./register">
+    					<input type="button" class="reset" value="Register">
+					</a>
 				</div>
-			</form>
 		</div>
-	<div class="clear"></div>
-</div>
-<div class="footer">
-	<p>Copyright &copy; 2018.I Do All rights reserved.  -Contact me:<a href="mailto:i@isfd.cc">i@isfd.cc</a></p>
-</div>
+		<div class="clear"></div>
+	</div>
+	<div class="footer">
+		<p>Copyright &copy; 2018.I Do All rights reserved.  -Contact me:<a href="mailto:i@isfd.cc">i@isfd.cc</a></p>
+	</div>
 </div>
 </body>
+
+<script type="text/javascript">
+	<!-- 发送数据到后端方法  -->
+	function send()
+	{
+		var json_data = JSON.stringify($('#fm').serializeJSON());
+		console.log(json_data);
+
+		instance = axios.create({
+		headers:{'Content-Type': 'application/json'}
+		});
+		instance.post('/submit',json_data).then(function(response){
+			if(response.data = '')
+				location.reload();
+			else
+				$("#alert).html(response.data);
+		}).catch(function(error){
+			$("#alert").html("你已经注册过了，请不要重复注册");
+			});
+	}
+	<!-- 删除数据方法  -->
+	function del(name)
+	{
+		console.log(name);
+		axios({
+				method:"DELETE",
+				url:'/submit',
+			data:{
+				"name":name
+			}
+		}).then(function(response){
+			if(response.data == '')
+				location.reload();
+			else
+				$("#alert").html(response.data);
+		});
+	}
+
+
+</script>
 </html>
