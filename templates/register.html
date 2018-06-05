@@ -15,45 +15,48 @@
 <!-- /css files -->
 </head>
 <body>
-<h1>希望你来注册是因为喜欢，而不是因为路过</h1>
-<div class="log">
-	<div class="content1">
-			<a href="index.html"><img src="../static/images/bg.jpg" height="100%" width="100%" style=" width: 600px;height: 348px;top:0;left:0; right:0"/></a>
+<h1>欢迎注册</h1>
+<div class="log container">
+	<div class="content1 row">
+		<a href="/">
+    					<img src="../static/images/bg.jpg" height="100%" width="100%" style=" width: 600px;height: 348px;top:0;left:0; right:0"/>
+					</a>
 			<p style="font-family:'Microsoft Yahei'" align="center" >点击上面的图片跳转到首页</p>
 	</div>
-	<div class="content2">
+
+	<div class="content2 row">
 		<h2>Sign Up</h2>
-		<form>
-			<input type="text" name="userid" value="USERNAME" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'NAME AND SURNAME';}">
-            <input type="password" name="psw" value="PASSWORD" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'PASSWORD';}">
-			<input type="submit" class="register" value="Register">
+		<form id="fm">
+				<input type="text" id="USERNAME" name="userid" value="USERNAME" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'NAME AND SURNAME';}">
+            	<input type="password" id="PASSWORD" name="psw" value="PASSWORD" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'PASSWORD';}">
 		</form>
+		<input type="submit" class="register" value="Register" onclick="send();">
 	</div>
 	<div class="clear"></div>
+	<div class="row flex-center"><label id="alert"></label></div>
 </div>
 <div class="footer">
-	<p style="text-align: center">就像结婚，是因为爱情，而不是因为合适</p>
 </div>
 
 </body>
 
 <script type="text/javascript">
-	<!-- push数据到后端方法  -->
+	<!-- 发送数据到后端方法  -->
 	function send()
 	{
 		var json_data = JSON.stringify($('#fm').serializeJSON());
 		console.log(json_data);
 
 		instance = axios.create({
-		headers:{'Content-Type': 'application/json'}
+			headers:{'Content-Type': 'application/json'}
 		});
-		instance.post('/submit',json_data).then(function(response){
-			if(response.data = '')
-				location.reload();
+		instance.post('/register',json_data).then(function(response){
+			if (response.data = '')
+				var isok=1;
 			else
 				$("#alert).html(response.data);
 		}).catch(function(error){
-			$("#alert").html("你已经注册过了，请不要重复注册");
+			$("#alert").html("你已注册，请勿重复注册");
 			});
 	}
 
