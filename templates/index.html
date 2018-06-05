@@ -26,18 +26,16 @@
 		</div>
 		<div class="content2">
 			<h2>Sign In</h2>
-			<div class="column">
+			<form id="fm">
 				<input type="text" id="USERNAME" name="USERNAME" value="USERNAME" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'USERNAME';}">
-			</div>
-			<div class="column">
 				<input type="password" id="PASSWORD" name="PASSWORD" value="PASSWORD" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'PASSWORD';}">
+			</form>
+			<div class="button-row">
+				<input type="submit" class="sign-in" value="Sign In" onclick="send();">
+				<a href="./register">
+					<input type="button" class="reset" value="Register">
+				</a>
 			</div>
-				<div class="button-row">
-				<input type="submit" class="sign-in" value="Sign In" id=submit onclick="send();">
-					<a href="./register">
-    					<input type="button" class="reset" value="Register">
-					</a>
-				</div>
 		</div>
 		<div class="clear"></div>
 	</div>
@@ -45,7 +43,10 @@
 		<p>Copyright &copy; 2018.I Do All rights reserved.  -Contact me:<a href="mailto:i@isfd.cc">i@isfd.cc</a></p>
 	</div>
 </div>
-</body>
+
+<script src="https://cdn.bootcss.com/axios/0.18.0/axios.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.slim.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery.serializeJSON/2.9.0/jquery.serializejson.min.js"></script>
 
 <script type="text/javascript">
 	<!-- 发送数据到后端方法  -->
@@ -57,32 +58,15 @@
 		instance = axios.create({
 		headers:{'Content-Type': 'application/json'}
 		});
-		instance.post('/submit',json_data).then(function(response){
-			if(response.data = '')
-				location.reload();
-			else
-				$("#alert).html(response.data);
-		}).catch(function(error){
-			$("#alert").html("你已经注册过了，请不要重复注册");
-			});
-	}
-	<!-- 删除数据方法  -->
-	function del(name)
-	{
-		console.log(name);
-		axios({
-				method:"DELETE",
-				url:'/submit',
-			data:{
-				"name":name
-			}
-		}).then(function(response){
-			if(response.data == '')
-				location.reload();
-			else
-				$("#alert").html(response.data);
-		});
-	}
+		instance.post('/',json_data).then(function(response){
+			if (response.data == '')
+                window.location.href='./home';
+            else
+                $("#alert").html(response.data);
+        }).catch(function (error) {
+            $("#alert").html("你已经填过表了, 请不要重复提交哦");
+         });
+    }
 
 
 </script>
