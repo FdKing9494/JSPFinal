@@ -24,9 +24,10 @@ def reg():
         return render_template('register.html')
     if request.method == 'POST':
         data = json.loads(request.data.decode('utf-8'))
+        print(data)
         try:
-            USERNAME = data['USERNAME'].strip()
-            PASSWORD = data['PASSWORD']
+            USERNAME = data['userid'].strip()
+            PASSWORD = data['psw']
             if(USERNAME == '' or PASSWORD == ''):
                 raise ValueError
             user = record(USERNAME = USERNAME, PASSWORD =PASSWORD)
@@ -38,20 +39,27 @@ def reg():
         print('committed!')
         return ''
 
+@app.route('/home',methods = ['GET','POST'])
+def home():
+    if request.method == 'GET':
+        return render_template('home.html')
+
+
 @app.route('/', methods = ['GET','POST'])
 def index():
     all_data = record.query.all()
-    # x = all_data['USERNAME']
     if request.method == 'GET':
         return render_template('index.html',data = all_data)
     if request.method == 'POST':
         data = json.loads(request.data.decode('utf-8'))
-        USERNAME = data['USERNAME']
-        PASSWORD = data['PASSWORD']
+        print(data)
+        USERNAME = str(data['USERNAME'])
+        PASSWORD = str(data['PASSWORD'])
         x = record.query.filter_by(USERNAME = USERNAME).one()
-        if (x.password == PASSWORD):
-            print("welcome!")
 
+        if (str(x.PASSWORD) == PASSWORD):
+            print("welcome!")
+            return ''
 
 @app.route('/submit',methods = ['GET','POST','DELETE','PATCH'])
 def submit():
@@ -61,8 +69,8 @@ def submit():
     if request.method == 'POST':
         data = json.loads(request.data.decode('utf-8'))
         try:
-            USERNAME = data['USERNAME'].strip()
-            PASSWORD = data['PASSWORD']
+            USERNAME = data['userid'].strip()
+            PASSWORD = data['psw']
             if(USERNAME == '' or PASSWORD == ''):
                 raise ValueError
             user = record(USERNAME = USERNAME,PASSWORD = PASSWORD)
@@ -76,7 +84,7 @@ def submit():
 
     if request.method == 'DELETE':
         data = json.loads(request.data.decode('utf-8'))
-        USERNAME = data['USERNAME'].strip()
+        USERNAME = data['userid'].strip()
         print(USERNAME)
         all_data = record.query.all()
         try:
@@ -89,8 +97,8 @@ def submit():
 
     if request.method == 'PATCH':
         data = json.loads(request.data.decode('utf-8'))
-        USERNAME = data['USERNAME'].strip()
-        PASSWORD = data['PASSWORD']
+        USERNAME = data['userid'].strip()
+        PASSWORD = data['psw']
         if(USERNAME == '' or PASSWORD == ''):
             raise ValueError
         try:
