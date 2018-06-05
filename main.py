@@ -17,21 +17,52 @@ class record(db.Model):
     USERNAME = db.Column(db.String(5), primary_key = True,nullable=False)
     PASSWORD = db.Column(db.String(10), nullable = False)
 
-@app.route('/', methods = ['GET','POST'])
-def index():
-    all_data = record.query.all()
-    if request.method == 'GET':
-        return render_template('index.html',data = all_data)
 
-@app.route('/submit',methods = ['GET','POST','DELETE','PATCH'])
-def sunmit():
+@app.route('/register', methods = ['GET','POST'])
+def reg():
     if request.method == 'GET':
-        return redirect('/')
+        return render_template('register.html')
     if request.method == 'POST':
         data = json.loads(request.data.decode('utf-8'))
         try:
             USERNAME = data['USERNAME'].strip()
-            PASSWORD = data['USERNAME']
+            PASSWORD = data['PASSWORD']
+            if(USERNAME == '' or PASSWORD == ''):
+                raise ValueError
+            user = record(USERNAME = USERNAME, PASSWORD =PASSWORD)
+            db.session.add(user)
+        except ValueError:
+            return '注册不合规，请检查'
+        db.session.commit()
+        db.session.close()
+        print('committed!')
+        return ''
+
+@app.route('/', methods = ['GET','POST'])
+def index():
+    all_data = record.query.all()
+    # x = all_data['USERNAME']
+    if request.method == 'GET':
+        return render_template('index.html',data = all_data)
+    if request.method == 'POST':
+        data = json.loads(request.data.decode('utf-8'))
+        USERNAME = data['USERNAME']
+        PASSWORD = data['PASSWORD']
+        x = record.query.filter_by(USERNAME = USERNAME).one()
+        if (x.password == PASSWORD):
+            print("welcome!")
+
+
+@app.route('/submit',methods = ['GET','POST','DELETE','PATCH'])
+def submit():
+    if request.method == 'GET':
+        return redirect('/')
+
+    if request.method == 'POST':
+        data = json.loads(request.data.decode('utf-8'))
+        try:
+            USERNAME = data['USERNAME'].strip()
+            PASSWORD = data['PASSWORD']
             if(USERNAME == '' or PASSWORD == ''):
                 raise ValueError
             user = record(USERNAME = USERNAME,PASSWORD = PASSWORD)
