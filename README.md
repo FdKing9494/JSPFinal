@@ -5,7 +5,7 @@
 * 数据存储：SQLite3
 
 
-=======================================
+==================================================================
 * FCC证书链接：[https://www.freecodecamp.cn/fdking9494/front-end-certification](https://www.freecodecamp.cn/fdking9494/front-end-certification)
 
 
