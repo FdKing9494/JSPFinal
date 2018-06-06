@@ -56,9 +56,11 @@ def index():
         PASSWORD = str(data['PASSWORD'])
         try:
             x = record.query.filter_by(USERNAME = USERNAME).one()
+
             if (str(x.PASSWORD) == PASSWORD):
                 print("welcome!")
-            return ''
+                return ''
+            return 'O'
         except:
             pass
             return 'ERROR'
