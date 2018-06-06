@@ -14,7 +14,7 @@
 1. 用户注册
 2. 用户登录（登录失败错误提示、成功跳转）
 
-##部署方法
+## 部署方法
 ### essential env
 (需要python 3及以上)
 <p><code>$pip install flask</code></p>
