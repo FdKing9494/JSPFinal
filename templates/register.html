@@ -21,7 +21,7 @@
 		<a href="/">
     					<img src="../static/images/bg.jpg" height="100%" width="100%" style=" width: 600px;height: 348px;top:0;left:0; right:0"/>
 					</a>
-			<p style="font-family:'Microsoft Yahei'" align="center" >点击上面的图片跳转到首页</p>
+			<p style="font-family:'Microsoft Yahei'" align="center" >已有账户？点击图片登录点击</p>
 	</div>
 
 	<div class="content2 row">
@@ -55,8 +55,8 @@
 			headers:{'Content-Type': 'application/json'}
 		});
 		instance.post('/register',json_data).then(function(response){
-			if (response.data = '')
-				var isok=1;
+			//if (response.data = '')
+				 window.location.href='/';
 
 		});
 	}

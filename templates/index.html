@@ -15,7 +15,7 @@
 <!-- /css files -->
 </head>
 <body>
-<h1>感谢你这么好看还来看我</h1>
+<h1>欢迎登录</h1>
 <div style="text-align: center">
 	<div class="log">
 		<div class="content1">
@@ -36,6 +36,7 @@
 					<input type="button" class="reset" value="Register">
 				</a>
 			</div>
+			<div class="row flex-center"><label id="alert"></label></div>
 		</div>
 		<div class="clear"></div>
 	</div>
@@ -54,6 +55,7 @@
 	{
 		var json_data = JSON.stringify($('#fm').serializeJSON());
 		console.log(json_data);
+		new_data = jQuery.parseJSON(json_data);
 
 		instance = axios.create({
 		headers:{'Content-Type': 'application/json'}
@@ -62,10 +64,8 @@
 			if (response.data == '')
                 window.location.href='./home';
             else
-                $("#alert").html(response.data);
-        }).catch(function (error) {
-            $("#alert").html("你已经填过表了, 请不要重复提交哦");
-         });
+               	$("#alert").html("Login Failed");
+        });
     }
 
 
